@@ -103,35 +103,40 @@ def build(read, files, style=""):
 
 def tree_html(paths, current, href):
     """Nested file tree (folders first, A-Z), the active page's folders open.
-    paths: {path: label}."""
-    root, labels = {}, {}
-    for p in paths:
+    paths: {path: display name}, the display name being the full page name
+    ("Projects/Aurora Engine"); its segments label the folders and the file."""
+    root, names = {}, {}
+    for p, shown in paths.items():
+        parts, disp = p.split("/"), (shown or p).split("/")
+        if len(disp) != len(parts):  # a bare title: label the file only
+            disp = parts[:-1] + disp[-1:]
         d = root
-        *dirs, leaf = p.split("/")
-        for part in dirs:
+        for i, part in enumerate(parts[:-1]):
+            names.setdefault("/".join(parts[: i + 1]), disp[i])
             d = d.setdefault(part + "/", {})
-        d[leaf] = p
-        labels[p] = paths[p]
+        d[parts[-1]] = p
+        names[p] = disp[-1]
     cur = (current or "").lower()
 
     def render(d, prefix):
         out = []
-        for k in sorted(d, key=lambda k: (not k.endswith("/"), k.lower())):
+        full = lambda k: prefix + k.rstrip("/")
+        for k in sorted(d, key=lambda k: (not k.endswith("/"), names[full(k)].lower())):
             v = d[k]
             if isinstance(v, dict):
-                fp = prefix + k[:-1]
+                fp = full(k)
                 op = " is-open" if cur.startswith(fp.lower() + "/") else ""
                 out.append(
                     f'<div class="oo-folder{op}" data-p="{escape(fp)}">'
                     f'<div class="oo-row oo-title"><svg class="oo-chev" viewBox="0 0 24 24">'
-                    f'<path d="M9 6l6 6-6 6"/></svg><span>{escape(k[:-1])}</span></div>'
+                    f'<path d="M9 6l6 6-6 6"/></svg><span>{escape(names[fp])}</span></div>'
                     f'<div class="oo-children">{render(v, fp + "/")}</div></div>'
                 )
             else:
                 act = " is-active" if v.lower() == cur else ""
                 out.append(
                     f'<div class="oo-row oo-file{act}"><a href="{escape(href(v))}">'
-                    f"{escape(k)}</a></div>"
+                    f"{escape(names[v])}</a></div>"
                 )
         return "".join(out)
 

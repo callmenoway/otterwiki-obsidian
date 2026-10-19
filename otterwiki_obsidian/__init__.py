@@ -8,6 +8,7 @@ without uninstalling.
 import json
 import os
 from functools import wraps
+from html import escape
 from pathlib import Path
 from urllib.parse import quote
 
@@ -47,6 +48,15 @@ def href(path):
     return "/" + "/".join(quote(p) for p in path.split("/"))
 
 
+def pagename(path, title):
+    """Full display name as Otterwiki shows it ("Projects/Aurora Engine")."""
+    try:
+        from otterwiki.helper import get_pagename_for_title as name
+    except ImportError:  # older Otterwiki
+        from otterwiki.helper import get_pagename as name
+    return name(path, full=True, header=title or None)
+
+
 class ObsidianPlugin:
     @hookimpl
     def setup(self, app, db, storage):
@@ -74,7 +84,7 @@ class ObsidianPlugin:
 
         if not has_permission("READ"):
             return None
-        paths = {n["id"]: n["label"] for n in self._data()["nodes"] if n["exists"]}
+        paths = {n["id"]: pagename(n["id"], n["label"]) for n in self._data()["nodes"] if n["exists"]}
         graph = url_for("plugin_url_request", name=NAME, extra="graph")
         return (
             '<details class="collapse-panel oo-panel" open>'
@@ -102,7 +112,7 @@ class ObsidianPlugin:
             '<div class="oo-local-head">Graph view'
             f'<a href="{url_for("plugin_url_request", name=NAME, extra="graph")}?focus={quote(page)}" title="Open full graph">⤢</a></div>'
             f'<div class="oo-graph" data-mode="embed" data-src="{self._url("data.json")}" '
-            f'data-focus="{page}" style="height:220px"></div>'
+            f'data-focus="{escape(page, quote=True)}" style="height:220px"></div>'
             '<div class="oo-back"></div></div>'
             f'<link rel="stylesheet" href="{self._url("graph.css")}">'
             f'<script src="{self._url("graph.js")}" defer></script>'
@@ -132,8 +142,6 @@ class ObsidianPlugin:
         return None
 
     def _graph_page(self, focus):
-        from html import escape
-
         return (
             '<!doctype html><html><head><meta charset="utf-8">'
             '<meta name="viewport" content="width=device-width,initial-scale=1">'

@@ -38,5 +38,12 @@ def test_tree():
     assert h.count("is-active") == 1 and h.count("is-open") == 2 and h.index("A") < h.index(">e<")
 
 
+def test_tree_display_names():
+    h = index.tree_html({"projects/aurora": "Projects/Aurora Engine", "zeta": "Alpha"}, "", lambda p: "/" + p)
+    assert ">Projects<" in h and ">Aurora Engine<" in h and 'data-p="projects"' in h
+    assert 'href="/projects/aurora"' in h and h.index(">Alpha<") > h.index(">Projects<")
+    assert "&lt;b&gt;" in index.tree_html({"x": "<b>"}, "", lambda p: "/" + p)
+
+
 if __name__ == "__main__":
-    test_build(); test_link_title_style(); test_md_links_make_no_ghosts(); test_tree(); print("ok")
+    test_build(); test_link_title_style(); test_md_links_make_no_ghosts(); test_tree(); test_tree_display_names(); print("ok")
