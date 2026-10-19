@@ -15,9 +15,17 @@ and a local graph with backlinks on every page. One `pip install`, zero JavaScri
 
 <img src="docs/animate.gif" alt="The graph view building itself node by node with the Animate button" width="720">
 
-[Features](#features) · [Install](#install) · [Using the graph](#using-the-graph) · [How it works](#how-it-works) · [FAQ](#faq)
+[▶ Demo video](https://youtu.be/l9ViIzmZAw4) · [Features](#features) · [Install](#install) · [Using the graph](#using-the-graph) · [How it works](#how-it-works) · [FAQ](#faq)
 
 </div>
+
+### ▶ See it in 50 seconds
+
+<p align="center">
+  <a href="https://youtu.be/l9ViIzmZAw4">
+    <img src="https://img.youtube.com/vi/l9ViIzmZAw4/maxresdefault.jpg" alt="Watch the otterwiki-obsidian demo on YouTube" width="720">
+  </a>
+</p>
 
 > [!NOTE]
 > All screenshots come from a demo wiki with made-up content (*Northwind Wiki*). Your wiki will look the same, with your own notes.
