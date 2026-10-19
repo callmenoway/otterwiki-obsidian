@@ -1,0 +1,17 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "otterwiki_obsidian"
+description = "Obsidian-style file tree and graph view plugin for An Otter Wiki."
+version = "0.1.0"
+license = "MIT"
+requires-python = ">=3.9"
+dependencies = []
+
+[project.entry-points.otterwiki]
+obsidian = "otterwiki_obsidian"
+
+[tool.hatch.build.targets.wheel]
+packages = ["otterwiki_obsidian"]

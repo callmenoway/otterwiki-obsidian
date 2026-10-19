@@ -1,0 +1,57 @@
+/* Obsidian graph view look. Scoped to .oo-*; loaded only on graph pages and the right sidebar. */
+.oo-graph { position: relative; width: 100%; overflow: hidden; touch-action: none; }
+.oo-graph canvas { display: block; }
+body.oo-page { margin: 0; height: 100vh; background: #fff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+.dark-mode body.oo-page { background: #1e1e1e; }
+body.oo-page .oo-graph { height: 100vh; }
+
+.oo-ctl { --bg: #f6f6f6; --bd: #d4d4d4; --fg: #2e3338; --mut: #6a6f75; --hov: rgba(0,0,0,.06); --acc: #7a5af5; --trk: #cfcfcf;
+  position: absolute; top: 12px; right: 12px; width: 300px; color: var(--fg); font-size: 13px; pointer-events: none; }
+.dark-mode .oo-ctl { --bg: #262626; --bd: #3b3b3b; --fg: #dadada; --mut: #999; --hov: rgba(255,255,255,.07); --acc: #8b6cef; --trk: #4a4a4a; }
+.oo-ctl > * { pointer-events: auto; }
+.oo-fab { display: block; margin: 0 0 6px auto; width: 30px; height: 30px; padding: 5px; border-radius: 6px; background: var(--bg);
+  border: 1px solid var(--bd); color: var(--mut); cursor: pointer; }
+.oo-fab:hover { color: var(--fg); background: var(--hov); }
+.oo-ctl svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.oo-fab[data-act=anim] svg { fill: currentColor; }
+.oo-home { position: fixed; left: 14px; bottom: 12px; color: var(--mut); text-decoration: none; font-size: 12.5px; pointer-events: auto; }
+.oo-home:hover { color: var(--fg); }
+.oo-stat { position: fixed; left: 14px; bottom: 32px; color: var(--mut); font-size: 12px; }
+
+.oo-panel2 { background: var(--bg); border: 1px solid var(--bd); border-radius: 8px; padding: 4px 0 6px; box-shadow: 0 4px 18px rgba(0,0,0,.25);
+  max-height: calc(100vh - 110px); overflow-y: auto; }
+.oo-ph { display: flex; justify-content: flex-end; gap: 2px; padding: 2px 8px; }
+.oo-ph button, .oo-grp button { width: 24px; height: 24px; padding: 4px; background: none; border: 0; color: var(--mut); cursor: pointer; border-radius: 4px; }
+.oo-ph button:hover, .oo-grp button:hover { background: var(--hov); color: var(--fg); }
+.oo-sec-h { display: flex; align-items: center; gap: 4px; padding: 6px 12px; font-weight: 600; cursor: pointer; }
+.oo-sec-h svg { width: 14px; height: 14px; transition: transform .12s; color: var(--mut); }
+.oo-sec.open > .oo-sec-h svg { transform: rotate(90deg); }
+.oo-sec-b { display: none; padding: 2px 12px 8px 12px; }
+.oo-sec.open > .oo-sec-b { display: block; }
+.oo-row2 { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 30px; }
+.oo-row2 input[type=range] { width: 110px; accent-color: var(--acc); }
+.oo-panel2 input[type=search], .oo-panel2 input[type=text], .oo-panel2 select { box-sizing: border-box; background: transparent; color: var(--fg);
+  border: 1px solid var(--bd); border-radius: 5px; padding: 4px 8px; font: inherit; }
+.oo-panel2 input[type=search] { width: 100%; margin-bottom: 6px; }
+.oo-btn { background: var(--hov); color: var(--fg); border: 1px solid var(--bd); border-radius: 5px; padding: 3px 12px; cursor: pointer; font: inherit; }
+.oo-btn:hover { border-color: var(--acc); }
+.oo-grp { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+.oo-grp input[type=text] { flex: 1; min-width: 0; }
+.oo-grp input[type=color] { width: 26px; height: 26px; padding: 0; border: 0; background: none; cursor: pointer; }
+/* toggle switch */
+.oo-sw { position: relative; width: 36px; height: 20px; flex: none; }
+.oo-sw input { opacity: 0; width: 100%; height: 100%; margin: 0; position: absolute; cursor: pointer; z-index: 1; }
+.oo-sw i { position: absolute; inset: 0; border-radius: 10px; background: var(--trk); transition: background .12s; }
+.oo-sw i::after { content: ""; position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%; background: #fff; transition: transform .12s; }
+.oo-sw input:checked + i { background: var(--acc); }
+.oo-sw input:checked + i::after { transform: translateX(16px); }
+
+/* local graph in the page's right sidebar */
+.oo-local { margin-bottom: 1rem; border: 1px solid rgba(128,128,128,.25); border-radius: 6px; overflow: hidden; }
+.oo-local-head { display: flex; justify-content: space-between; padding: 6px 10px; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; opacity: .75; }
+.oo-local-head a { text-decoration: none; }
+.oo-local .oo-graph { background: #fff; }
+.dark-mode .oo-local .oo-graph { background: #1e1e1e; }
+.oo-back { font-size: 13px; padding: 0 10px 8px; }
+.oo-back a { display: block; padding: 1px 0; text-decoration: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.oo-back-h { font-size: 12px; opacity: .65; padding: 6px 0 2px; }
